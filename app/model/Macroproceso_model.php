@@ -6,16 +6,19 @@ namespace Entidad;
 
 use App\Lib\Database;
 use App\Lib\Response;
+use App\Lib\ResponseBootgrid;
 
 class Macroproceso_model{
     private $db;
     private $table = 'macroprocesos';
     private $response;
+    private $bootgrid;
 
     public function __construct()
     {
         $this->db = Database::StartUp();
         $this->response = new Response();
+        $this->bootgrid = new ResponseBootgrid();
     }
 
     public function GetAll($url=false)
@@ -39,6 +42,30 @@ class Macroproceso_model{
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
+        };
+    }
+
+    public function GetAllBootgrid($url=false)
+    {
+        try {
+            $result = array();
+            if($url){
+                $sql = sprintf("SELECT t.*, concat(%s,t.id) link FROM $this->table t", $url);
+            }else{
+                $sql = sprintf("SELECT t.* FROM $this->table t");
+            }
+
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+
+            $this->bootgrid->setResponse(true);
+            $this->bootgrid->rows = $stm->fetchAll();
+
+            return $this->bootgrid;
+
+        } catch (Exception $e) {
+            $this->bootgrid->setResponse(false, $e->getMessage());
+            return $this->bootgrid;
         };
     }
 

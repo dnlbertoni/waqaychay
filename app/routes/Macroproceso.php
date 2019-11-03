@@ -13,9 +13,15 @@ $app->get('/macroprocesos', function (Request $request, Response $response, arra
 $app->get('/macroprocesos/html', function (Request $request, Response $response) use($container) {
     $dat = new \Entidad\Macroproceso_model();
     $datos = json_encode($dat->GetAll('"/macroproceso/"')->result);
-    $args = array('datos'=>$datos);
+    $args = array('datos'=>$datos, 'urlData'=>'/macroprocesos/bootgrid');
     return $container->get('renderer')->render($response, 'grilla.phtml', $args);
 });
+
+$app->get('/macroprocesos/bootgrid', function (Request $request, Response $response) use($container) {
+    $procesos = new \Entidad\Macroproceso_model();
+    return $response->withJson($procesos->GetAllBootgrid('"/macroproceso/"'));
+});
+
 
 $app->post('/macroproceso', function (Request $request, Response $response) {
     $proceso = new \Entidad\Macroproceso_model();
