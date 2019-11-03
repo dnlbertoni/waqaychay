@@ -6,24 +6,32 @@ namespace Entidad;
 
 use App\Lib\Database;
 use App\Lib\Response;
+use App\Lib\ResponseBootgrid;
 
 class Responsable_model{
     private $db;
     private $table = 'responsables';
     private $response;
+    private $bootgrid;
 
     public function __construct()
     {
         $this->db = Database::StartUp();
         $this->response = new Response();
+        $this->bootgrid = new ResponseBootgrid();
     }
 
-    public function GetAll()
+    public function GetAll($url=false)
     {
         try {
             $result = array();
+            if($url){
+                $sql = sprintf("SELECT t.*, concat(%s,t.id) link FROM $this->table t", $url);
+            }else{
+                $sql = sprintf("SELECT t.* FROM $this->table t");
+            }
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table");
+            $stm = $this->db->prepare($sql);
             $stm->execute();
 
             $this->response->setResponse(true);
@@ -34,6 +42,29 @@ class Responsable_model{
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
+        };
+    }
+
+    public function GetAllBootgrid($url=false)
+    {
+        try {
+            $result = array();
+            if($url){
+                $sql = sprintf("SELECT t.*, concat(%s,t.id) link FROM $this->table t", $url);
+            }else{
+                $sql = sprintf("SELECT t.* FROM $this->table t");
+            }
+
+            $stm = $this->db->prepare($sql);
+            $stm->execute();
+
+            $this->bootgrid->setResponse($stm->fetchAll(), $stm->rowCount());
+
+            return $this->bootgrid;
+
+        } catch (Exception $e) {
+            $this->bootgrid->setResponse(false, $e->getMessage());
+            return $this->bootgrid;
         };
     }
 
@@ -81,7 +112,7 @@ class Responsable_model{
                     ->execute(
                         array(
                             $data['name'],
-                            $data['estado']
+                            1
                         )
                     );
             }

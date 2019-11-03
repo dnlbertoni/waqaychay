@@ -8,7 +8,7 @@ use App\Lib\Database;
 use App\Lib\Response;
 use App\Lib\ResponseBootgrid;
 
-class Macroproceso_model{
+class Macroproceso_model {
     private $db;
     private $table = 'macroprocesos';
     private $response;

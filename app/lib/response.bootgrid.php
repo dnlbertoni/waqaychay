@@ -11,6 +11,7 @@ class ResponseBootgrid
 	
 	public function SetResponse($response, $m = '')	{
 		$this->rows = $response;
+		$this->total = $m;
 
 		if(!$response && $m = '') $this->rows = array();
 	}

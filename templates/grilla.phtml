@@ -1,7 +1,3 @@
-<?php
-$titulo = &$titulo;
-$urlData = &$urlData;
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +12,28 @@ $urlData = &$urlData;
         <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/jquery/bootgrid/jquery.bootgrid.js" ></script>
         <script src="/jquery/bootgrid/jquery.bootgrid.fa.js" ></script>
+
+        <style>
+            body {
+                margin: 50px 0 0 0;
+                padding: 0;
+                width: 100%;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                text-align: center;
+                color: #aaa;
+                font-size: 18px;
+            }
+
+            h1 {
+                color: #719e40;
+                letter-spacing: -3px;
+                font-family: 'Lato', sans-serif;
+                font-size: 100px;
+                font-weight: 200;
+                margin-bottom: 0;
+            }
+        </style>
+
     </head>
     <body>
     <div class="container-fluid">
@@ -26,13 +44,25 @@ $urlData = &$urlData;
                 <thead>
                 <tr>
                     <th data-column-id="id" data-type="numeric" data-identifier="true">ID</th>
-                    <th data-column-id="name">Nombre</th>
+                    <?php if(isset($th)):?>
+                        <?php foreach ($th as $t):?>
+                            <?php if($t != 'id' && $t != 'link' ):?>
+                                <th data-column-id="<?=$t?>"><?=$t?></th>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                    <?php else:?>
+                        <th data-column-id="name">Nombre</th>
+                    <?php endif;?>
                     <th data-column-id="link"  data-formatter="link" data-order="desc">Link</th>
                 </tr>
                 </thead>
             </table>
         </div>
-        <div class="col-2">&nbsp;</div>
+        <div class="col-2">&nbsp;
+            <?php if(isset($linkAdd)):?>
+                <a href="<?php echo $linkAdd?>"><button class="btn btn-outline-success btn-lg" > <i class="fa fa-plus-circle"></i> Agregar</button></a>
+            <?php endif;?>
+        </div>
     </div>
     <script>
         $("#grid-data-api").bootgrid({
@@ -49,12 +79,7 @@ $urlData = &$urlData;
             formatters: {
                 "link": function(column, row)
                 {
-                    return "<a href='" + row.id + "'><i class='fa fa-edit'></i></a>";
-                },
-                "commands": function(column, row)
-                {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                    return "<a href='" + row.link + "'><i class='fa fa-edit'></i></a>";
                 }
             },
             labels: {
