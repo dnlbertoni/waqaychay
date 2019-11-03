@@ -1,4 +1,7 @@
 /vendor/
-/logs/*
+/logs/
 !/logs/README.md
 composer.lock
+./.idea/
+/public/jquery/
+/public/bootstrap/
