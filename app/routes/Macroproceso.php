@@ -13,7 +13,7 @@ $app->get('/macroprocesos', function (Request $request, Response $response, arra
 $app->get('/macroprocesos/html', function (Request $request, Response $response) use($container) {
     $dat = new \Entidad\Macroproceso_model();
     $datos = json_encode($dat->GetAll('"/macroproceso/"')->result);
-    $args = array('datos'=>$datos, 'urlData'=>'/macroprocesos/bootgrid');
+    $args = array('datos'=>$datos, 'urlData'=>'/macroprocesos/bootgrid', 'titulo'=>'Macroprocesos');
     return $container->get('renderer')->render($response, 'grilla.phtml', $args);
 });
 
