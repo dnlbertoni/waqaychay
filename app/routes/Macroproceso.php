@@ -5,23 +5,32 @@ use Slim\Http\Response;
 
 $container = $app->getContainer();
 
-$app->get('/macroprocesos', function (Request $request, Response $response, array $args)   {
-    $procesos=new \Entidad\Macroproceso_model();
-    return $response->withJson($procesos->GetAll('"/macroproceso/"')->result);
-});
-
-$app->get('/macroprocesos/html', function (Request $request, Response $response) use($container) {
+$app->get('/macroprocesos/[{formato}]', function (Request $request, Response $response, $param) use($container) {
     $dat = new \Entidad\Macroproceso_model();
-    $datos = json_encode($dat->GetAll('"/macroproceso/"')->result);
-    $args = array('datos'=>$datos, 'urlData'=>'/macroprocesos/bootgrid', 'titulo'=>'Macroprocesos');
-    return $container->get('renderer')->render($response, 'grilla.phtml', $args);
+    if(isset($param['formato'])){
+        switch ($param['formato']) {
+            case 'html':
+                $datos = json_encode($dat->GetAll('"/macroproceso/"')->result);
+                $th = (array)$dat->GetAll('"/macroproceso/"')->result[0];
+                $th = array_keys($th);
+                $args = array('datos' => $datos,
+                    'urlData' => '/macroprocesos/bootgrid',
+                    'titulo' => 'Macroprocesos',
+                    'th' => $th,
+                    'linkAdd' => '/macroproceso'
+                );
+                return $container->get('renderer')->render($response, 'grilla.phtml', $args);
+                break;
+            case 'bootgrid':
+                return $response->withJson($dat->GetAllBootgrid('"/macroproceso/"'));
+                break;
+            default:
+                return $response->withJson($dat->GetAll('"/macroproceso/"')->result);
+        }
+    }else{
+        return $response->withJson($dat->GetAll('"/macroproceso/"')->result);
+    };
 });
-
-$app->get('/macroprocesos/bootgrid', function (Request $request, Response $response) use($container) {
-    $procesos = new \Entidad\Macroproceso_model();
-    return $response->withJson($procesos->GetAllBootgrid('"/macroproceso/"'));
-});
-
 
 $app->post('/macroproceso', function (Request $request, Response $response) {
     $proceso = new \Entidad\Macroproceso_model();
