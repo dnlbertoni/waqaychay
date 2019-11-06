@@ -7,13 +7,14 @@ namespace Entidad;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Test
+ * Tareas
  *
- * @ORM\Table(name="grupos")
+ * @ORM\Table(name="tareas")
  * @ORM\Entity
  */
-class Grupos{
 
+class Tareas
+{
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -21,16 +22,19 @@ class Grupos{
      */
     private $id;
 
-
     /**
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $detalle;
+    /**
+     * @ORM\Column(name="idsubproceso", type="integer", length=5)
+     */
+    private $idtarea;
 
     /**
-     * @ORM\Column(name="abreviatura", type="string", length=255)
+     * @ORM\Column(name="estado", type="integer", length=5)
      */
-    private $abreviatura;
+    private $estado;
 
     public function __get($property)
     {
@@ -50,4 +54,6 @@ class Grupos{
 
         }
     }
+
+
 }

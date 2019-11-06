@@ -21,12 +21,15 @@ class Procesos{
      */
     private $id;
 
-
     /**
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="codigo", type="string", length=15)
+     */
+    private $codigo;
 
     /**
      * @ORM\Column(name="idmacroproceso", type="integer", length=5)

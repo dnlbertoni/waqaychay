@@ -26,6 +26,13 @@ class Subprocesos
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="codigo", type="string", length=25)
+     */
+    private $codigo;
+
+
     /**
      * @ORM\Column(name="idproceso", type="integer", length=5)
      */

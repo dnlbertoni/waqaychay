@@ -88,10 +88,11 @@ class Proceso_model{
         try {
             if (isset($data['id'])) {
                 $sql = "UPDATE $this->table SET 
-                            name          = ?, 
-                            idmacroproceso        = ?,
-                            idresponsable          = ?,
-                            estado = ?
+                            name              = ?, 
+                            idmacroproceso    = ?,
+                            codigo            = ?,
+                            idresponsable     = ?,
+                            estado            = ?
                         WHERE id = ?";
 
                 $this->db->prepare($sql)
@@ -99,6 +100,7 @@ class Proceso_model{
                         array(
                             $data['name'],
                             $data['idmacroproceso'],
+                            $data['codigo'],
                             $data['idresponsable'],
                             $data['estado'],
                             $data['id']
@@ -106,14 +108,15 @@ class Proceso_model{
                     );
             } else {
                 $sql = "INSERT INTO $this->table
-                            (name, idmacroproceso, idresponsable, estado)
-                            VALUES (?,?,?, ?)";
+                            (name, idmacroproceso,codigo, idresponsable, estado)
+                            VALUES (?,?,?, ?, ?)";
 
                 $this->db->prepare($sql)
                     ->execute(
                         array(
                             $data['name'],
                             $data['idmacroproceso'],
+                            $data['codigo'],
                             $data['idresponsable'],
                             1
                         )

@@ -38,14 +38,8 @@ $app->post('/macroproceso', function (Request $request, Response $response) {
 });
 
 $app->get('/macroproceso', function (Request $request, Response $response) use($container) {
-    $grupos[0]['id']=1;
-    $grupos[0]['name']='Estrategico';
-    $grupos[1]['id']=2;
-    $grupos[1]['name']='Operacional';
-    $grupos[2]['id']=3;
-    $grupos[2]['name']='Soporte';
-
-    $args = array('grupos'=>$grupos);
+    $grupos= new \Entidad\Grupo_model();
+    $args = array('grupos'=>$grupos->GetAll()->result);
     return $container->get('renderer')->render($response, 'addmacro.phtml', $args);
 });
 $app->get('/macroproceso/{id}', function (Request $request, Response $response,$args) use($container) {

@@ -35,10 +35,6 @@ class Actividades
      * @ORM\Column(name="idresponsable", type="integer", length=5)
      */
     private $idresponsable;
-    /**
-     * @ORM\Column(name="idarea", type="integer", length=5)
-     */
-    private $idarea;
 
     /**
      * @ORM\Column(name="estado", type="integer", length=5)

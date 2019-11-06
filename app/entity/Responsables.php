@@ -28,6 +28,12 @@ class Responsables{
     private $name;
 
     /**
+     * @ORM\Column(name="idarea", type="integer")
+     */
+    private $idarea;
+
+
+    /**
      * @ORM\Column(name="estado", type="string", length=255)
      */
     private $estado;

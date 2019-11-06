@@ -92,6 +92,7 @@ class Responsable_model{
             if (isset($data['id'])) {
                 $sql = "UPDATE $this->table SET 
                             name          = ?, 
+                            idarea        = ?,
                             estado        = ?
                         WHERE id = ?";
 
@@ -99,19 +100,21 @@ class Responsable_model{
                     ->execute(
                         array(
                             $data['name'],
+                            $data['idarea'],
                             $data['estado'],
                             $data['id']
                         )
                     );
             } else {
                 $sql = "INSERT INTO $this->table
-                            (name, estado)
-                            VALUES (?,?)";
+                            (name, idarea,estado)
+                            VALUES (?,?,?)";
 
                 $this->db->prepare($sql)
                     ->execute(
                         array(
                             $data['name'],
+                            $data['idarea'],
                             1
                         )
                     );

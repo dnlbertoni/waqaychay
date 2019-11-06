@@ -39,10 +39,13 @@
                 <label>Nombre</label>
                 <input type="text" value="" name="name"/>
                 <br/>
+                <label>Abreviatura</label>
+                <input type="text" value="" name="abreviatura" size="5" max="5"/>
+                <br/>
                 <label>Grupo</label>
                 <select name="idgrupo">
                     <?php foreach ($grupos as $i):?>
-                        <option value="<?= $i['id']?>"><?= $i['name']?></option>
+                        <option value="<?= $i->id?>"><?= $i->name?></option>
                     <?php endforeach;?>
                 </select>
                 <br/>

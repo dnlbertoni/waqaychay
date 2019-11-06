@@ -93,24 +93,27 @@ class Grupo_model {
             if (isset($data['id'])) {
                 $sql = "UPDATE $this->table SET 
                             name          = ?, 
+                            abreviatura   = ?,
                         WHERE id = ?";
 
                 $this->db->prepare($sql)
                     ->execute(
                         array(
                             $data['name'],
+                            $data['abreviatura'],
                             $data['id']
                         )
                     );
             } else {
                 $sql = "INSERT INTO $this->table
-                            (name)
-                            VALUES (?)";
+                            (name, abreviatura)
+                            VALUES (?, ?)";
 
                 $this->db->prepare($sql)
                     ->execute(
                         array(
-                            $data['name']
+                            $data['name'],
+                            $data['abreviatura']
                         )
                     );
             }

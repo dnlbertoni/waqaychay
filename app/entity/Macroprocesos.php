@@ -27,6 +27,10 @@ class Macroprocesos{
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="abreviatura", type="string", length=255)
+     */
+    private $abreviatura;
 
     /**
      * @ORM\Column(name="idgrupo", type="integer", length=5)
